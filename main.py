@@ -49,6 +49,4 @@ print(result['accuracy'])
 pred_dicts = list(linear_est.predict(eval_input_fn))
 probs = pd.Series([pred['probabilities'][1] for pred in pred_dicts])
 
-print(probs[0])
-print(y_train[0])
 
