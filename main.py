@@ -8,8 +8,7 @@ import tensorflow as tf
 
 CSV_COLUMN_NAMES = ['position', 'heightinchestotal', 'weight', 'fortyyd', 'twentyss', 'threecone', 'vertical', 'broad', 'bench']
 POSITIONS = {'RB': 1, 'WR': 2, 'OLB': 3, 'FS': 4, 'DE': 5, 'TE': 6, 'ILB': 7, 'DT': 8, 'P': 9, 'QB': 10, 'OG': 11,
-             'OT': 12, 'K': 13, 'FB': 14, 'SS': 15, 'LS': 16, 'CB': 17, 'C': 18, 'NT': 19, 'OC': 20, 'Edwards': 21,
-             'Fowler': 22}
+             'OT': 12, 'K': 13, 'FB': 14, 'SS': 15, 'LS': 16, 'CB': 17, 'C': 18, 'NT': 19, 'OC': 20}
 
 train = pd.read_csv(r'C:\Users\Admin\Desktop\Programming Applications and Projects\NFL Stuff\combine.csv', header=0)
 test = pd.read_csv(r'C:\Users\Admin\Desktop\Programming Applications and Projects\NFL Stuff\combine.csv', header=0)
@@ -37,12 +36,12 @@ print(my_feature_columns)
 # Build a DNN with 2 hidden layers with 30 and 10 hidden nodes each.
 classifier = tf.estimator.DNNClassifier(
     feature_columns=my_feature_columns,
-    hidden_units=[180, 66],
-    n_classes=23)
+    hidden_units=[210, 70],
+    n_classes=21)
 
 classifier.train(
     input_fn=lambda: input_fn(train, train_y, training=True),
-    steps=5000)
+    steps=10000)
 
 eval_result = classifier.evaluate(
     input_fn=lambda: input_fn(test, test_y, training=False))
