@@ -13,6 +13,7 @@ CSV_COLUMN_NAMES = ['position', 'Height', 'Weight', 'FortyYard', 'TwentySS',
 POSITIONS = {'RB': 1, 'WR': 2, 'OLB': 3, 'FS': 4, 'DE': 5, 'TE': 6, 'ILB': 7, 'DT': 8, 'P': 9, 'QB': 10, 'OG': 11,
              'OT': 12, 'K': 13, 'FB': 14, 'SS': 15, 'LS': 16, 'CB': 17, 'C': 18, 'NT': 19, 'OC': 20}
 
+# Create training and testing datasets
 train = pd.read_csv(r'C:\Users\Admin\Desktop\Programming Applications and Projects\NFL Stuff\combine.csv',
                     names=CSV_COLUMN_NAMES, header=0)
 test = pd.read_csv(r'C:\Users\Admin\Desktop\Programming Applications and Projects\NFL Stuff\combine.csv',
@@ -50,6 +51,7 @@ def input_fn(features, labels, training=True, batch_size=256):
 
   return dataset.batch(batch_size)
 
+# Feature columns describe how to use the input
 my_feature_columns = []
 for key in train.keys():
     my_feature_columns.append(tf.feature_column.numeric_column(key=key))
@@ -71,6 +73,7 @@ eval_result = classifier.evaluate(
 print('\nTest set accuracy: {accuracy:0.3f}\n'.format(**eval_result))
 
 
+# Creates input function without labels
 def input_fn(features, batch_size=256):
     # Convert the inputs to a Dataset without labels.
     return tf.data.Dataset.from_tensor_slices(dict(features)).batch(batch_size)
