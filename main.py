@@ -3,8 +3,9 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import numpy as np
 import pandas as pd
 from IPython.display import clear_output
-
 import tensorflow as tf
+
+from numpy import nan
 
 CSV_COLUMN_NAMES = ['position', 'Height', 'Weight', 'FortyYard', 'TwentySS',
                     'ThreeCone', 'Vertical', 'Broad', 'Bench']
@@ -17,13 +18,30 @@ train = pd.read_csv(r'C:\Users\Admin\Desktop\Programming Applications and Projec
 test = pd.read_csv(r'C:\Users\Admin\Desktop\Programming Applications and Projects\NFL Stuff\combine.csv',
                    names=CSV_COLUMN_NAMES, header=0)
 
+# Replaces zero values with NaN (missing value) from numpy
+train[['Height', 'Weight', 'FortyYard', 'TwentySS', 'ThreeCone', 'Vertical', 'Broad', 'Bench']] \
+    = train[['Height', 'Weight', 'FortyYard', 'TwentySS', 'ThreeCone', 'Vertical', 'Broad', 'Bench']].replace(0, nan)
+
+# Eliminates rows with missing values
+train.dropna(inplace=True)
+
+# Replaces zero values with NaN (missing value) from numpy
+test[['Height', 'Weight', 'FortyYard', 'TwentySS', 'ThreeCone', 'Vertical', 'Broad', 'Bench']] \
+    = test[['Height', 'Weight', 'FortyYard', 'TwentySS', 'ThreeCone', 'Vertical', 'Broad', 'Bench']].replace(0, nan)
+
+# Eliminates rows with missing values
+test.dropna(inplace=True)
+
+# Replaces position abbreviation with numerical value
 train.position = [POSITIONS[item] for item in train.position]
 test.position = [POSITIONS[item] for item in test.position]
 
+# Separates target information from the data
 train_target = train.pop('position')
 test_target = test.pop('position')
 
 
+# Create input function
 def input_fn(features, labels, training=True, batch_size=256):
   dataset = tf.data.Dataset.from_tensor_slices((dict(features), labels))
 

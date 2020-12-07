@@ -17,14 +17,19 @@ train = pd.read_csv(r'C:\Users\Admin\Desktop\Programming Applications and Projec
 test = pd.read_csv(r'C:\Users\Admin\Desktop\Programming Applications and Projects\NFL Stuff\combine.csv',
                    names=CSV_COLUMN_NAMES)
 
+# Replaces zero values with NaN (missing value) from numpy
+train[['Height', 'Weight', 'FortyYard', 'TwentySS', 'ThreeCone', 'Vertical', 'Broad', 'Bench']] \
+    = train[['Height', 'Weight', 'FortyYard', 'TwentySS', 'ThreeCone', 'Vertical', 'Broad', 'Bench']].replace(0, nan)
+
+# Eliminates rows with missing values
+train.dropna(inplace=True)
+
+# Replaces position abbreviation with numerical value
 train.position = [POSITIONS[item] for item in train.position]
 test.position = [POSITIONS[item] for item in test.position]
 
 train_target = train.pop('position')
 test_target = test.pop('position')
 
-train[['Height', 'Weight', 'FortyYard', 'TwentySS', 'ThreeCone', 'Vertical', 'Broad', 'Bench']] \
-    = train[['Height', 'Weight', 'FortyYard', 'TwentySS', 'ThreeCone', 'Vertical', 'Broad', 'Bench']].replace(0, nan)
 
-print(train.head())
 
