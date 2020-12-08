@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-
+from sklearn import preprocessing
 from numpy import nan
 
 CSV_COLUMN_NAMES = ['position', 'Height', 'Weight', 'FortyYard', 'TwentySS',
@@ -31,5 +31,16 @@ test.position = [POSITIONS[item] for item in test.position]
 train_target = train.pop('position')
 test_target = test.pop('position')
 
+print(train.std(axis=0))
+print(train.mean(axis=0))
 
+# Standardization of data
+names = train.columns
+
+scaler = preprocessing.StandardScaler()
+
+train = scaler.fit_transform(train)
+train = pd.DataFrame(train, columns=names)
+test = scaler.transform(test)
+test = pd.DataFrame(test, columns=names)
 

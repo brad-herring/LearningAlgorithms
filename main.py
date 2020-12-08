@@ -2,9 +2,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import numpy as np
 import pandas as pd
-from IPython.display import clear_output
 import tensorflow as tf
-
+from sklearn import preprocessing
 from numpy import nan
 
 CSV_COLUMN_NAMES = ['position', 'Height', 'Weight', 'FortyYard', 'TwentySS',
@@ -12,6 +11,9 @@ CSV_COLUMN_NAMES = ['position', 'Height', 'Weight', 'FortyYard', 'TwentySS',
 
 POSITIONS = {'RB': 1, 'WR': 2, 'OLB': 3, 'FS': 4, 'DE': 5, 'TE': 6, 'ILB': 7, 'DT': 8, 'P': 9, 'QB': 10, 'OG': 11,
              'OT': 12, 'K': 13, 'FB': 14, 'SS': 15, 'LS': 16, 'CB': 17, 'C': 18, 'NT': 19, 'OC': 20}
+
+POSITIONS_REV = {1: 'RB', 2: 'WR', 3: 'OLB', 4: 'FS', 5: 'DE',6: 'TE', 7: 'ILB', 8: 'DT', 9: 'P', 10: 'QB', 11: 'OG',
+                 12: 'OT', 13: 'K', 14: 'FB', 15: 'SS', 16: 'LS', 17: 'CB', 18: 'C', 19: 'NT', 20: 'OC'}
 
 # Create training and testing datasets
 train = pd.read_csv(r'C:\Users\Admin\Desktop\Programming Applications and Projects\NFL Stuff\combine.csv',
@@ -40,6 +42,16 @@ test.position = [POSITIONS[item] for item in test.position]
 # Separates target information from the data
 train_target = train.pop('position')
 test_target = test.pop('position')
+
+# Standardization of training and testing data
+names = train.columns
+
+scaler = preprocessing.StandardScaler()
+
+train = scaler.fit_transform(train)
+train = pd.DataFrame(train, columns=names)
+test = scaler.transform(test)
+test = pd.DataFrame(test, columns=names)
 
 
 # Create input function
@@ -101,4 +113,4 @@ for pred_dict in predictions:
     probability = pred_dict['probabilities'][class_id]
 
     print('Prediction is "{}" ({:.1f}%)'.format(
-        class_id, 100 * probability))
+        POSITIONS_REV[class_id], 100 * probability))
