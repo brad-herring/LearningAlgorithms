@@ -1,6 +1,5 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import numpy as np
 import pandas as pd
 import tensorflow as tf
 from sklearn import preprocessing
@@ -69,16 +68,18 @@ for key in train.keys():
     my_feature_columns.append(tf.feature_column.numeric_column(key=key))
 print(my_feature_columns)
 
-# Build a DNN with 2 hidden layers with 30 and 10 hidden nodes each.
+# Build a DNN with 2 hidden layers with 210 and 70 hidden nodes each.
 classifier = tf.estimator.DNNClassifier(
     feature_columns=my_feature_columns,
     hidden_units=[210, 70],
     n_classes=21)
 
+# Train the model
 classifier.train(
     input_fn=lambda: input_fn(train, train_target, training=True),
     steps=10000)
 
+# Evaluate the accuracy of the model
 eval_result = classifier.evaluate(
     input_fn=lambda: input_fn(test, test_target, training=False))
 
@@ -91,6 +92,7 @@ def input_fn(features, batch_size=256):
     return tf.data.Dataset.from_tensor_slices(dict(features)).batch(batch_size)
 
 
+# Gathers user input to predict the position
 features = ['Height', 'Weight', 'FortyYard', 'TwentySS',
             'ThreeCone', 'Vertical', 'Broad', 'Bench']
 
