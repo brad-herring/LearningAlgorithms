@@ -12,3 +12,8 @@ Topics covered in this project:
 - Hidden layer/node (hyperparameter) manipulation to tune the model
 - Making predictions using user input
 - Evaluating prediction accuracy
+
+Possible future updates:
+- Edit user input script to accept origial data before preprocessing
+- Further clean the data by eliminating several positions
+- Use feature importance techniques to uncover useful information
