@@ -17,3 +17,4 @@ Possible future updates:
 - Edit user input script to accept origial data before preprocessing
 - Further clean the data by eliminating several positions
 - Use feature importance techniques to uncover useful information
+- Split the training and testing data into chunks of the original data
