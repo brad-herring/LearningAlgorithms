@@ -18,3 +18,9 @@ Possible future updates:
 - Further clean the data by eliminating several positions
 - Use feature importance techniques to uncover useful information
 - Split the training and testing data into chunks of the original data
+
+Tutorial link(s):
+https://youtu.be/tPYj3fFJGjk
+
+Data Source(s):
+http://nflsavant.com/dump/combine.csv?year=2015
